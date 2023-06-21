@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
-import VanillaTilt from 'vanilla-tilt';
 import axiosFetch from '../utils/axiosFetch';
 
 
@@ -14,9 +13,10 @@ const Home = () => {
         const userHomePage = async () => {
             if (user) {
                 try {
-                    console.log("Cold Drink")
                     const res = await axiosFetch.get(`getdata`, {
                     })
+                    console.log("hello")
+                    console.log(res.data)
                     // const res = await fetch('https://server-express-pay-houy.vercel.app/getdata', {
                     //     method: "GET",
                     //     headers: {

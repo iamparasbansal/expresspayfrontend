@@ -31,8 +31,6 @@ const Login = () => {
     } else {
       localStorage.setItem("Authorization", data.token)
       dispatch(login({
-        email: email,
-        password: password,
         isLoggedin: true,
       }));
       navigate('/')

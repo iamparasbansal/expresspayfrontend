@@ -74,18 +74,9 @@ const Navbar = ({ user }) => {
     try {
       await axiosFetch.get(`logout`, {
       })
-      // await fetch('https://server-express-pay-houy.vercel.app/logout', {
-      //   method: "GET",
-      //   headers: {
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json"
-      //   },
-      //   credentials: "include"
-      // });
       localStorage.removeItem('Authorization')
-      localStorage.removeItem('token')
       dispatch(logout());
-      navigate('/', { replace: true });
+      setTimeout(navigate, 0, "/", { replace: true });
     } catch (error) {
       console.log(error);
     }

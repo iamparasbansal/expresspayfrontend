@@ -199,7 +199,7 @@ const Profile = () => {
                       <div>User Id</div>
                     </div>
                     <div className="col-md-6">
-                      <p>787865454546</p>
+                      <p>{userData._id}</p>
                     </div>
                   </div>
                   <div className="row mt-3">
@@ -224,14 +224,6 @@ const Profile = () => {
                     </div>
                     <div className="col-md-6">
                       <p>{userData.phone}</p>
-                    </div>
-                  </div>
-                  <div className="row mt-3">
-                    <div className="col-md-6">
-                      <div>Profession</div>
-                    </div>
-                    <div className="col-md-6">
-                      <p>Web Developer</p>
                     </div>
                   </div>
                 </div>

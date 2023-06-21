@@ -74,7 +74,8 @@ const Navbar = ({ user }) => {
     try {
       await axiosFetch.get(`logout`, {
       })
-      localStorage.removeItem('Authorization')
+      sessionStorage.clear();
+      localStorage.clear();
       dispatch(logout());
       setTimeout(navigate, 0, "/", { replace: true });
     } catch (error) {

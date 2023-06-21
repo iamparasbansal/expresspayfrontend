@@ -664,9 +664,7 @@ label.valid:after {
 .profile-work ul {
   list-style: none;
 }
-.profile-tab label {
-  /* font-weight: 600; */
-}
+
 .profile-tab p {
   /* font-weight: 600; */
   color: #FC5185;
@@ -862,9 +860,6 @@ label.valid:after {
 
 .contact_form {
   padding-top: 18px;
-}
-
-.contact_form_container {
 }
 
 .contact_form_title {
@@ -1433,11 +1428,6 @@ header {
   font-size: 25px;
 }
 
-.copy{
-  
-} 
-
-
 .headingcashback{
   margin-left:300px;
   font-weight: 600;
@@ -1463,10 +1453,6 @@ header {
 .option{
   padding:5px;
   border:10px solid black;
-}
-
-.imagecash{
-  
 }
 
 .searchbox2{

@@ -107,9 +107,9 @@ const Navbar = ({ user }) => {
           <li className="nav nav-item navbar navbar-light bg-light">
             <Link style={{ color: "black" }} className="nav-link" to="/contact">Contact</Link>
           </li>
-          <li className="nav nav-item navbar navbar-light bg-light">
+          {/* <li className="nav nav-item navbar navbar-light bg-light">
             <Link style={{ color: "black" }} className="nav-link" to="/news">News</Link>
-          </li>
+          </li> */}
           <li className="nav nav-item navbar navbar-light bg-light">
             <Link style={{ color: "black" }} className="nav-link" to="/stock">Stocks</Link>
           </li>

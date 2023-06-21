@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const getAuthToken = () => {
+  console.log("Hellloooooo")
   if (typeof window !== 'undefined') {
     return localStorage.getItem('Authorization') || window.localStorage.getItem('Authorization');
   }

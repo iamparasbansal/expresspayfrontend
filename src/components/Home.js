@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/userSlice';
-import axiosFetch from '../utils/axiosFetch';
 
 
 const Home = () => {
@@ -13,8 +12,13 @@ const Home = () => {
         const userHomePage = async () => {
             if (user) {
                 try {
-                    const res = await axiosFetch.get(`getdata`, {
-                    })
+                    const token = localStorage.getItem('Authorization');
+                    const res = await axios.get('https://server-express-pay-houy.vercel.app/getdata', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                        withCredentials: true,
+                    });
                     setUserName(res.data.name);
                 } catch (err) {
                     console.log("eroor received")

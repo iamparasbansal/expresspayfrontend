@@ -30,14 +30,15 @@ import Voucher from './components/Voucher'
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/userSlice';
 import Query from './components/Query';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const App = () => {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   const ProtectedRoute = ({ element: Component, pageName, ...props }) => {
     if (!user) {
-      alert(`Please log in to access ${pageName}.`);
-      return <Navigate to="/login" />;
+      return setTimeout(navigate, 0, "/", { replace: true });;
     }
     return <Component {...props} />;
   };

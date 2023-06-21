@@ -72,7 +72,6 @@ const Navbar = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-
       const token = localStorage.getItem('Authorization');
       await axios.get('https://server-express-pay-houy.vercel.app/logout', {
         headers: {

@@ -16,7 +16,6 @@ const Signup = () => {
   })
   let name, value;
   const handleInputs = (e) => {
-    console.log(e);
     name = e.target.name;
     value = e.target.value;
     setuser({ ...user, [name]: value });
@@ -42,7 +41,7 @@ const Signup = () => {
     else {
       window.alert("Registration successful")
       console.log("Successful Registration")
-
+      localStorage.setItem("Authorization", data.token)
       console.log(data);
       dispatch(login({
         email: email,

@@ -11,56 +11,76 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const [user, setuser] = useState({
     name: "", email: "", phone: "", password: "", cpassword: ""
   })
+
   let name, value;
+
   const handleInputs = (e) => {
     name = e.target.name;
     value = e.target.value;
     setuser({ ...user, [name]: value });
   }
+
   const PostData = async (e) => {
     e.preventDefault();
-    const { name, email, phone, password, cpassword } = user;
-    const res = await fetch("https://server-express-pay-houy.vercel.app/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name, email, phone, password, cpassword
-      }),
-      credentials: "include"
-    });
-    const data = await res.json();
-    if (data.status === 422 || !data) {
-      window.alert("Invalid Registration")
-      console.log("Invalid Registraion")
-    }
-    else {
-      window.alert("Registration successful")
-      localStorage.setItem("Authorization", data.token)
-      console.log("Successful Registration")
-      console.log(data);
-      dispatch(login({
-        isLoggedin: true,
-      }));
-      setTimeout(navigate, 0, "/", { replace: true });
+    if (!/^[A-Za-z]+$/.test(user.name)) {
+      alert("Name can contain only alpha letters")
+    } else if (!emailPattern.test(user.email)) {
+      alert("Enter a valid email format to continue");
+    } else if (user.phone.length != 10) {
+      alert("Phone Number should be of 10 digits")
+    } else if (user.cpassword != user.password) {
+      alert("Values in Password and Confirm Password should match");
+    } else {
+      const { name, email, phone, password, cpassword } = user;
+      const res = await fetch("https://server-express-pay-houy.vercel.app/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name, email, phone, password, cpassword
+        }),
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (data.status === 422 || !data) {
+        window.alert("Invalid Registration")
+        console.log("Invalid Registraion")
+      }
+      else {
+        window.alert("Registration successful")
+        localStorage.setItem("Authorization", data.token)
+        console.log("Successful Registration")
+        console.log(data);
+        dispatch(login({
+          isLoggedin: true,
+        }));
+        setTimeout(navigate, 0, "/", { replace: true });
+      }
     }
   }
 
   const form = useRef();
+
   const sendEmail = async (e) => {
-
     e.preventDefault();
-
-    emailjs.sendForm('service_uj23xts', 'template_onpipfw', form.current, 'BR__VjbRbuwhJvRFU')
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
+    if (!emailPattern.test(user.email)) {
+    } else if (user.cpassword != user.password) {
+    } else if (!/^[A-Za-z]+$/.test(user.name)) {
+    } else if (user.phone.length != 10) {
+    } else {
+      emailjs.sendForm('service_uj23xts', 'template_onpipfw', form.current, 'BR__VjbRbuwhJvRFU')
+        .then((result) => {
+          console.log(result.text);
+        }, (error) => {
+          console.log(error.text);
+        });
+    }
   };
 
   return (

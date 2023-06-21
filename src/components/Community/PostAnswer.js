@@ -7,10 +7,7 @@ import {
     ButtonGroup,
     Typography,
 } from "@material-ui/core"
-
-import axiosFetch from "../../utils/axiosFetch"
-import { useSelector } from "react-redux"
-import userSlice from "../../features/userSlice"
+import axios from "axios"
 
 const PostAnswer = ({ qid, setReload = f => f, reload, user }) => {
     const [desc, setDesc] = useState("")
@@ -28,7 +25,17 @@ const PostAnswer = ({ qid, setReload = f => f, reload, user }) => {
         }
 
         try {
-            const res = await axiosFetch.post(`comment/${qid}`, { desc })
+
+            const token = localStorage.getItem('token'); 
+            const res = await axios.post(`https://server-express-pay-houy.vercel.app/comment/${qid}`, {
+                desc,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`, 
+                },
+                withCredentials: true, 
+            });
+
             if (res.data) {
 
                 window.alert("success fully replied")

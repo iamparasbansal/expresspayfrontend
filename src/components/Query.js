@@ -1,39 +1,16 @@
 
 import React, { useEffect, useState } from "react"
-// import Layout from "../components/main/layout"
 import { Container, Typography, Divider, Hidden } from "@material-ui/core"
-import axiosFetch from "../utils/axiosFetch"
 import Grid from "@material-ui/core/Grid"
 import { ThemeProvider } from "styled-components"
 import { chosenTheme } from "../theme"
 import { makeStyles } from "@material-ui/core/styles"
-// import { usePromiseTracker } from "react-promise-tracker"
 import { trackPromise } from "react-promise-tracker"
 import PostQuestion from "./Community/PostQuestion"
 import SearchQuestion from "./Community/SearchQuestion"
 import Question from "./Community/Question"
-// import Loader from "react-loader-spinner"
-// import KommunicateChat from "../chat"
-// const LoadingIndicator = props => {
-//   const { promiseInProgress } = usePromiseTracker()
-//   return (
-//     promiseInProgress && (
-//       <div
-//         style={{
-//           width: "100%",
-//           height: "100",
-//           display: "flex",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
-//       >
-//         <Loader type="ThreeDots" color="#3c2bad" height={100} width={100} />
-//       </div>
-//     )
-//   )
-// }
+import axios from "axios"
 
-// import FilterResults from "react-filter-search"
 const useStyles = makeStyles({
   title: {
     fontFamily: "arial",
@@ -42,7 +19,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Query({user}) {
+export default function Query({ user }) {
   const classes = useStyles()
   const [queries, setQueries] = useState([])
   const [reload, setReload] = useState(true)
@@ -51,7 +28,13 @@ export default function Query({user}) {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const res = await axiosFetch.get("https://server-express-pay-houy.vercel.app/query")
+        const token = localStorage.getItem('Authorization');
+        const res = await axios.get('https://server-express-pay-houy.vercel.app/query', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
 
         if (res.data) {
           setQueries(res.data)
@@ -80,7 +63,7 @@ export default function Query({user}) {
                   theme={chosenTheme}
                   reload={reload}
                   setReload={setReload}
-                  user = {user}
+                  user={user}
                 />
                 <SearchQuestion
                   search={search}
@@ -88,7 +71,7 @@ export default function Query({user}) {
                   theme={chosenTheme}
                   reload={reload}
                   setReload={setReload}
-                  user = {user}
+                  user={user}
                 />
               </Grid>
             </Hidden>
@@ -114,7 +97,7 @@ export default function Query({user}) {
                         reload={reload}
                         setReload={setReload}
                         theme={chosenTheme}
-                        user = {user}
+                        user={user}
                       />
                     </div>
                   ))
@@ -132,14 +115,14 @@ export default function Query({user}) {
                   theme={chosenTheme}
                   reload={reload}
                   setReload={setReload}
-                  user = {user}
+                  user={user}
                 />
                 <PostQuestion
                   data-aos="zoom-in"
                   theme={chosenTheme}
                   reload={reload}
                   setReload={setReload}
-                  user = {user}
+                  user={user}
                 />
               </Grid>
             </Hidden>

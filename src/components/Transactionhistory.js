@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import '../styles/Transactionhistory.css';
-import axiosFetch from '../utils/axiosFetch';
 
 const Transactionhistory = () => {
   const [user, setUser] = useState(null);
@@ -13,8 +11,6 @@ const Transactionhistory = () => {
   useEffect(() => {
     fetchUser();
     fetchTransactions();
-
-    // Clear user and transactions data when the component unmounts
     return () => {
       setUser(null);
       setTransactions([]);
@@ -23,16 +19,13 @@ const Transactionhistory = () => {
 
   const fetchUser = async () => {
     try {
-      // Make an API call to fetch user information based on the current user
-      const response = await axiosFetch.get(`getdata`, {
-      })
-      // const response = await fetch('https://server-express-pay-houy.vercel.app/getdata', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   credentials: "include"
-      // });
+      const token = localStorage.getItem('Authorization');
+      const response = await axios.get('https://server-express-pay-houy.vercel.app/getdata', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       setUser(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -44,15 +37,14 @@ const Transactionhistory = () => {
   const fetchTransactions = async () => {
     try {
       // Make an API call to fetch transactions for the current user
-      const response = await axiosFetch.get(`findTransaction`, {
-      })
-      // const response = await fetch('https://server-express-pay-houy.vercel.app/findTransaction', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   credentials: "include"
-      // });
+      const token = localStorage.getItem('Authorization');
+      const response = await axios.get('https://server-express-pay-houy.vercel.app/findTransaction', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
       setTransactions(response.data);
     } catch (error) {
       console.log(error);

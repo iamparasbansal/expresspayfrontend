@@ -1,8 +1,6 @@
 import React, {useEffect, useState}  from 'react'
 import aboutpic from "../images/about1.png";
-// import { useHistory } from "react-router-dom";
 import { Navigate, useNavigate } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 import PaymentsPage from './Payment.js';
 const About = () => {
 
@@ -11,8 +9,13 @@ const About = () => {
 
     const callAboutPage = async () => {
         try {
-            const res = await axiosFetch.get(`about`, {
-            })
+            const token = localStorage.getItem('Authorization');
+            const res = await axios.get('https://server-express-pay-houy.vercel.app/about', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
             setUserData(res.data);
 
             if (!res.data.status === 200) {     
@@ -23,7 +26,6 @@ const About = () => {
         } 
         catch (err) {
             console.log(err);
-            // navigate('/login');
         }
     }
 

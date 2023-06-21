@@ -11,15 +11,13 @@ import {
 } from "@material-ui/core"
 import Answer from "./Answer"
 import PostAnswer from "./PostAnswer"
-import { useSelector } from "react-redux"
 import { makeStyles } from "@material-ui/core/styles"
 import InputBase from "@material-ui/core/InputBase"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
-import axiosFetch from "../../utils/axiosFetch"
 import DeleteIcon from "@material-ui/icons/Delete"
 import DoneAllIcon from "@material-ui/icons/DoneAll"
 import UpdateIcon from "@material-ui/icons/Update"
-import userSlice from "../../features/userSlice"
+import axios from "axios"
 
 const useStyles = makeStyles({
     root: {
@@ -85,16 +83,13 @@ const Question = ({
     useEffect(() => {
         const callAboutPage = async () => {
             try {
-                const res = await axiosFetch.get(`about`, {
-                })
-                // const res = await fetch('/about', {
-                //     method: "GET",
-                //     headers: {
-                //         Accept: "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     credentials: "include"
-                // });
+                const token = localStorage.getItem('Authorization');
+                const res = await axios.get('https://server-express-pay-houy.vercel.app/about', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                });
                 setFetchedUserId(res.data._id)
                 if (res.data.status !== 200) {
                     const error = new Error(res.error);
@@ -112,7 +107,15 @@ const Question = ({
         event.preventDefault()
 
         try {
-            const res = await axiosFetch.delete(`query/${data._id}`)
+
+            const token = localStorage.getItem('Authorization');
+            const res = await axios.delete(`https://server-express-pay-houy.vercel.app/query/${data._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
             if (res.data) {
 
                 window.alert("success deleted")
@@ -127,7 +130,14 @@ const Question = ({
         event.preventDefault()
 
         try {
-            const res = await axiosFetch.get(`resolvequery/${data._id}`)
+
+            const token = localStorage.getItem('Authorization');
+            const res = await axios.get(`https://server-express-pay-houy.vercel.app/resolvequery/${data._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
             if (res.data) {
 
                 window.alert("resolved")
@@ -142,9 +152,15 @@ const Question = ({
         event.preventDefault()
 
         try {
-            const res = await axiosFetch.put(`query/${data._id}`, {
-                desc,
-            })
+
+            const token = localStorage.getItem('token'); 
+            const res = await axios.put(`https://api.example.com/data/query/${data._id}`, desc, {
+              headers: {
+                Authorization: `Bearer ${token}`, 
+              },
+              withCredentials: true, 
+            });
+
             if (res.data) {
 
                 window.alert("success updated")
@@ -228,7 +244,7 @@ const Question = ({
                             data={d}
                             reload={reload}
                             setReload={setReload}
-                            user ={user}
+                            user={user}
                         />
                     ))}
                 <PostAnswer qid={data._id} reload={reload} setReload={setReload} user={user} />
@@ -236,13 +252,11 @@ const Question = ({
 
             <Grid container spacing={3}>
                 {user?.isLoggedin && fetchedUserId === data.author._id && (
-                    //alignSelf: "center"
                     <Grid item style={{ margin: 10, justifyContent: "space-between" }}>
                         {disabled && (
                             <Button
                                 variant="contained"
                                 color="primary"
-                                //style={{ backgroundColor: "#e05358" }}
                                 startIcon={<UpdateIcon />}
                                 onClick={() => setDisabled(false)}
                             >
@@ -253,7 +267,6 @@ const Question = ({
                             <Button
                                 variant="contained"
                                 color="primary"
-                                //style={{ backgroundColor: "#e05358" }}
                                 startIcon={<UpdateIcon />}
                                 onClick={UpdateQuestion}
                             >

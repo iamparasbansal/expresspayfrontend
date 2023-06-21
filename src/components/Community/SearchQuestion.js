@@ -31,20 +31,7 @@ const useStyles = makeStyles({
 })
 const SearchQuestion = ({ setSearch = f => f, search = "", user }) => {
 
-    // const state = useSelector(({ auth }) => auth)
     const classes = useStyles()
-    // const [data, setData] = useState({
-    //   desc: "",
-    //   title: "",
-    //   tag: "",
-    // })
-
-    // const handleChange = event => {
-    //   setData({
-    //     ...data,
-    //     [event.target.name]: event.target.value,
-    //   })
-    // }
 
     return (
         <Container data-aos="zoom-in">

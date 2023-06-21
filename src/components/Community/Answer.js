@@ -11,14 +11,12 @@ import {
 } from "@material-ui/core"
 import ThumbUpIcon from "@material-ui/icons/ThumbUp"
 import ThumbDownIcon from "@material-ui/icons/ThumbDown"
-import { useSelector } from "react-redux"
-import axiosFetch from "../../utils/axiosFetch"
 import { makeStyles } from "@material-ui/core/styles"
 import InputBase from "@material-ui/core/InputBase"
 import DeleteIcon from "@material-ui/icons/Delete"
 import UpdateIcon from "@material-ui/icons/Update"
 import '../../styles/global.css'
-import userSlice from "../../features/userSlice"
+import axios from "axios"
 
 const useStyles = makeStyles({
     paper: {
@@ -99,16 +97,13 @@ const Answer = ({
     useEffect(() => {
         const callAboutPage = async () => {
             try {
-                const res = await axiosFetch.get(`about`, {
-                })
-                // const res = await fetch('https://server-express-pay-houy.vercel.app/about', {
-                //     method: "GET",
-                //     headers: {
-                //         Accept: "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     credentials: "include"
-                // });
+                const token = localStorage.getItem('Authorization');
+                const res = await axios.get('https://server-express-pay-houy.vercel.app/about', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true,
+                });
                 setFetchedUserId(res.data._id)
                 if (res.data.status !== 200) {
                     const error = new Error(res.error);
@@ -144,9 +139,17 @@ const Answer = ({
                 return
             }
 
-            const res = await axiosFetch.post(`votecomment/${qid}/${rid}`, {
+
+            const token = localStorage.getItem('token');
+            const res = await axios.post(`https://server-express-pay-houy.vercel.app/votecomment/${qid}/${rid}`, {
                 vote,
-            })
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
             if (res.data) {
 
                 window.alert("voted")
@@ -168,9 +171,15 @@ const Answer = ({
         }
 
         try {
-            const res = await axiosFetch.delete(
-                `deletecomment/${qid}/${data._id}`
-            )
+
+            const token = localStorage.getItem('Authorization');
+            const res = await axios.delete(`https://server-express-pay-houy.vercel.app/deletecomment/${qid}/${data._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
             if (res.data) {
 
                 window.alert("success deleted")
@@ -191,9 +200,16 @@ const Answer = ({
         }
 
         try {
-            const res = await axiosFetch.put(`updatecomment/${qid}/${data._id}`, {
-                desc,
-            })
+
+            const token = localStorage.getItem('token');
+
+            const res = await axios.put(`https://server-express-pay-houy.vercel.app/updatecomment/${qid}/${data._id}`, desc, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
             if (res.data) {
 
                 window.alert("success updated")

@@ -10,7 +10,7 @@ import twohundredrupees from "../images/twohundredrupees.jpg";
 import tworupees from "../images/tworupees.jpg";
 import twothousandrupees from "../images/twothousandrupees.jpg";
 import { useNavigate } from 'react-router-dom';
-import axiosFetch from '../utils/axiosFetch';
+import axios from "axios"
 
 const Erupi = () => {
   const navigate = useNavigate();
@@ -24,15 +24,13 @@ const Erupi = () => {
   useEffect(() => {
     const Erupidata = async () => {
       try {
-        const res = await axiosFetch.get(`getdata`, {
-        })
-        // const res = await fetch('https://server-express-pay-houy.vercel.app/getdata', {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   credentials: "include"
-        // });
+        const token = localStorage.getItem('Authorization');
+        const res = await axios.get('https://server-express-pay-houy.vercel.app/getdata', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         setUserData({ ...userData, name: res.data.name, email: res.data.email, accountno: res.data.accountno, balance: res.data.balance });
 
         if (!res.data.status === 200) {
@@ -73,25 +71,19 @@ const Erupi = () => {
     console.log(pin);
 
     try {
-      const res = await axiosFetch.post(`transaction`, {
+
+      const token = localStorage.getItem('token');
+      const res = await axios.post('https://server-express-pay-houy.vercel.app/transaction', {
         accountno,
         pin,
         amount,
-        receiverAccountNumber
-      })
-      // const res = await fetch('https://server-express-pay-houy.vercel.app/transaction', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     accountno,
-      //     pin,
-      //     amount,
-      //     receiverAccountNumber,
-      //   }),
-      //   credentials: "include"
-      // });
+        receiverAccountNumber,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
 
       if (res.data.status === 200) {
         const data = await res.json();

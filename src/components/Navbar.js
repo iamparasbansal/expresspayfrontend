@@ -7,7 +7,7 @@ import logo from "../images/expressPayLogo.jpg";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../features/userSlice';
-import axiosFetch from '../utils/axiosFetch';
+import axios from 'axios';
 //import {UserContext} from "../App";
 
 const Navbar = ({ user }) => {
@@ -72,8 +72,14 @@ const Navbar = ({ user }) => {
 
   const handleLogout = async () => {
     try {
-      await axiosFetch.get(`logout`, {
-      })
+
+      const token = localStorage.getItem('Authorization');
+      await axios.get('https://server-express-pay-houy.vercel.app/logout', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
       sessionStorage.clear();
       localStorage.clear();
       dispatch(logout());

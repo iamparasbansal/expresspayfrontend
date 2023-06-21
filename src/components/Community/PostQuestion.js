@@ -8,10 +8,9 @@ import {
     Typography,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import axiosFetch from "../../utils/axiosFetch"
 import SendIcon from "@material-ui/icons/Send"
-import { useSelector } from "react-redux"
-import userSlice from "../../features/userSlice"
+import axios from "axios"
+
 const useStyles = makeStyles({
     root: {
         borderRadius: 30,
@@ -60,7 +59,17 @@ const PostQuestion = ({ setReload = f => f, reload, user }) => {
         }
 
         try {
-            const res = await axiosFetch.post(`query`, data)
+
+            const token = localStorage.getItem('token');
+            const res = await axios.post('https://server-express-pay-houy.vercel.app/query', {
+                data,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+            });
+
             if (res.data) {
                 window.alert("your Query is created successfully")
                 setReload(!reload)

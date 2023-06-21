@@ -22,7 +22,7 @@ const Signup = () => {
   }
   const PostData = async (e) => {
     e.preventDefault();
-    const { name, email, phone, password, cpassword} = user;
+    const { name, email, phone, password, cpassword } = user;
     const res = await fetch("https://server-express-pay-houy.vercel.app/register", {
       method: "POST",
       headers: {
@@ -46,7 +46,7 @@ const Signup = () => {
       dispatch(login({
         isLoggedin: true,
       }));
-      navigate('/');
+      setTimeout(navigate, 0, "/", { replace: true });
     }
   }
 

@@ -33,7 +33,7 @@ const Login = () => {
       dispatch(login({
         isLoggedin: true,
       }));
-      navigate('/')
+      setTimeout(navigate, 0, "/", { replace: true });
     }
   }
   return (

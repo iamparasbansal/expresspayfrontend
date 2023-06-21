@@ -16,21 +16,23 @@ const Signup = () => {
   })
   let name, value;
   const handleInputs = (e) => {
+    console.log(e);
     name = e.target.name;
     value = e.target.value;
     setuser({ ...user, [name]: value });
   }
   const PostData = async (e) => {
     e.preventDefault();
-    const { name, email, phone, password, cpassword } = user;
-    const res = await fetch("/register", {
+    const { name, email, phone, password, cpassword} = user;
+    const res = await fetch("https://server-express-pay-houy.vercel.app/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         name, email, phone, password, cpassword
-      })
+      }),
+      credentials: "include"
     });
     const data = await res.json();
     if (data.status === 422 || !data) {

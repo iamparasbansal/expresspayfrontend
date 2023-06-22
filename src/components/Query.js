@@ -10,6 +10,7 @@ import PostQuestion from "./Community/PostQuestion"
 import SearchQuestion from "./Community/SearchQuestion"
 import Question from "./Community/Question"
 import axios from "axios"
+import axiosFetch from "../utils/axiosFetch"
 
 const useStyles = makeStyles({
   title: {
@@ -28,13 +29,7 @@ export default function Query({ user }) {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const token = localStorage.getItem('Authorization');
-        const res = await axios.get('https://server-express-pay-houy.vercel.app/query', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        });
+        const res = await axiosFetch.get("https://server-express-pay-houy.vercel.app/query")
 
         if (res.data) {
           setQueries(res.data)
@@ -45,6 +40,7 @@ export default function Query({ user }) {
     }
     trackPromise(fetchdata())
   }, [reload])
+  
   return (
     <>
       <ThemeProvider theme={chosenTheme}>

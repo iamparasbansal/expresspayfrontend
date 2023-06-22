@@ -18,6 +18,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import DoneAllIcon from "@material-ui/icons/DoneAll"
 import UpdateIcon from "@material-ui/icons/Update"
 import axios from "axios"
+import axiosFetch from "../../utils/axiosFetch"
 
 const useStyles = makeStyles({
     root: {
@@ -105,17 +106,8 @@ const Question = ({
 
     const deleteQuestion = async event => {
         event.preventDefault()
-
         try {
-
-            const token = localStorage.getItem('Authorization');
-            const res = await axios.delete(`https://server-express-pay-houy.vercel.app/query/${data._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
-
+            const res = await axiosFetch.delete(`query/${data._id}`)
             if (res.data) {
 
                 window.alert("success deleted")
@@ -130,14 +122,7 @@ const Question = ({
         event.preventDefault()
 
         try {
-
-            const token = localStorage.getItem('Authorization');
-            const res = await axios.get(`https://server-express-pay-houy.vercel.app/resolvequery/${data._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
+            const res = await axiosFetch.get(`resolvequery/${data._id}`)
             if (res.data) {
 
                 window.alert("resolved")
@@ -152,15 +137,9 @@ const Question = ({
         event.preventDefault()
 
         try {
-
-            const token = localStorage.getItem('token'); 
-            const res = await axios.put(`https://api.example.com/data/query/${data._id}`, desc, {
-              headers: {
-                Authorization: `Bearer ${token}`, 
-              },
-              withCredentials: true, 
-            });
-
+            const res = await axiosFetch.put(`query/${data._id}`, {
+                desc,
+            })
             if (res.data) {
 
                 window.alert("success updated")

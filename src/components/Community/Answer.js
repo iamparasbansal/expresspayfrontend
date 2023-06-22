@@ -17,6 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import UpdateIcon from "@material-ui/icons/Update"
 import '../../styles/global.css'
 import axios from "axios"
+import axiosFetch from "../../utils/axiosFetch"
 
 const useStyles = makeStyles({
     paper: {
@@ -139,17 +140,9 @@ const Answer = ({
                 return
             }
 
-
-            const token = localStorage.getItem('token');
-            const res = await axios.post(`https://server-express-pay-houy.vercel.app/votecomment/${qid}/${rid}`, {
+            const res = await axiosFetch.post(`votecomment/${qid}/${rid}`, {
                 vote,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
-
+            })
             if (res.data) {
 
                 window.alert("voted")
@@ -171,15 +164,9 @@ const Answer = ({
         }
 
         try {
-
-            const token = localStorage.getItem('Authorization');
-            const res = await axios.delete(`https://server-express-pay-houy.vercel.app/deletecomment/${qid}/${data._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
-
+            const res = await axiosFetch.delete(
+                `deletecomment/${qid}/${data._id}`
+            )
             if (res.data) {
 
                 window.alert("success deleted")
@@ -200,16 +187,9 @@ const Answer = ({
         }
 
         try {
-
-            const token = localStorage.getItem('token');
-
-            const res = await axios.put(`https://server-express-pay-houy.vercel.app/updatecomment/${qid}/${data._id}`, desc, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
-
+            const res = await axiosFetch.put(`updatecomment/${qid}/${data._id}`, {
+                desc,
+            })
             if (res.data) {
 
                 window.alert("success updated")

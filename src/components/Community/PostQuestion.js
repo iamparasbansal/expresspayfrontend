@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import SendIcon from "@material-ui/icons/Send"
-import axios from "axios"
+import axiosFetch from "../../utils/axiosFetch"
 
 const useStyles = makeStyles({
     root: {
@@ -59,17 +59,7 @@ const PostQuestion = ({ setReload = f => f, reload, user }) => {
         }
 
         try {
-
-            const token = localStorage.getItem('token');
-            const res = await axios.post('https://server-express-pay-houy.vercel.app/query', {
-                data,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-            });
-
+            const res = await axiosFetch.post(`query`, data)
             if (res.data) {
                 window.alert("your Query is created successfully")
                 setReload(!reload)

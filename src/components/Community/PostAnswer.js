@@ -14,8 +14,8 @@ const PostAnswer = ({ qid, setReload = f => f, reload, user }) => {
     const postReply = async event => {
         event.preventDefault()
 
-        if (!qid || desc.length < 10) {
-            window.alert("invalid query or add valid reply (length > 10)")
+        if (!qid) {
+            window.alert("Invalid Query or Query not found")
             return
         }
 
@@ -25,17 +25,7 @@ const PostAnswer = ({ qid, setReload = f => f, reload, user }) => {
         }
 
         try {
-
-            const token = localStorage.getItem('token'); 
-            const res = await axios.post(`https://server-express-pay-houy.vercel.app/comment/${qid}`, {
-                desc,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`, 
-                },
-                withCredentials: true, 
-            });
-
+            const res = await axiosFetch.post(`comment/${qid}`, { desc })
             if (res.data) {
 
                 window.alert("success fully replied")

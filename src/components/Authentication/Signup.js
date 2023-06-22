@@ -27,7 +27,7 @@ const Signup = () => {
 
   const PostData = async (e) => {
     e.preventDefault();
-    if (!/^[A-Za-z]+$/.test(user.name)) {
+    if (!/^[A-Za-z\s]+$/.test(user.name)) {
       alert("Name can contain only alpha letters")
     } else if (!emailPattern.test(user.email)) {
       alert("Enter a valid email format to continue");
@@ -71,7 +71,7 @@ const Signup = () => {
     e.preventDefault();
     if (!emailPattern.test(user.email)) {
     } else if (user.cpassword != user.password) {
-    } else if (!/^[A-Za-z]+$/.test(user.name)) {
+    } else if (!/^[A-Za-z\s]+$/.test(user.name)) {
     } else if (user.phone.length != 10) {
     } else {
       emailjs.sendForm('service_uj23xts', 'template_onpipfw', form.current, 'BR__VjbRbuwhJvRFU')
